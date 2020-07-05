@@ -1,0 +1,42 @@
+1 爬楼梯
+class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        # n小于3 ret n
+        # n大于等于3 s，s_1， fn
+        fn_1, fn_2 = 2,1
+        if n<3:
+            return n
+        #暴力递归 n=38时超时
+        # return self.climbStairs(n-1)+self.climbStairs(n-2)
+        # 内存代替递归
+        # 理解分两步1 为什么fn=fn-1+fn-2，思想：我有多少种最后还有一步到目的的方法+有多少种最后还有两步到目的方法。
+        # 2 规律就是fn+1=fn+fn-1,fn = fn_1+fn_2向上进1即可推演到第二部
+        for i in range(3,n+1):
+            fn = fn_1+fn_2
+            fn_2=fn_1
+            fn_1=fn
+        return fn
+
+2 括号生成
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        res = []
+        self.dfs(res, n, n, '')
+        return res
+        
+    def dfs(self, res, left, right, path):
+        if left == 0 and right == 0:
+            res.append(path)
+            return
+        if left > 0:
+            self.dfs(res, left - 1, right, path + '(')
+        if left < right:
+            self.dfs(res, left, right - 1, path + ')')
