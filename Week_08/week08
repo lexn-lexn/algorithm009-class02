@@ -1,0 +1,47 @@
+week08
+1 数组的相对排序
+class Solution(object):
+    def relativeSortArray(self, arr1, arr2):
+        """
+        :type arr1: List[int]
+        :type arr2: List[int]
+        :rtype: List[int]
+        """
+        #将arr1 counter计数，按照arr2来取
+        li = []
+        counter = collections.Counter
+        count = counter(arr1)
+        #按照arr2将arr1的元素存入li
+        for val in arr2:
+            if val in count:
+                l = count[val]
+                print(l)
+                for i in range(l):
+                    li.append(val)
+            #被存的元素删除掉
+            del count[val]
+        #剩下的元素排序放到末尾
+        li += sorted(list(count.elements()))
+        return li
+		
+2 区间合并
+class Solution(object):
+    def merge(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        if not intervals:
+            return []
+            
+        intervals.sort(key=lambda x: x[0])
+        merge_list = []
+        merge_list.append(intervals[0])
+
+        for x, y in intervals[1:]:
+            if merge_list[-1][1] >= x:
+                merge_list[-1] = [merge_list[-1][0], max(merge_list[-1][1], y)]
+            else:
+                merge_list.append([x, y])
+        
+        return merge_list
