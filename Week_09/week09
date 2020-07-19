@@ -1,0 +1,44 @@
+1翻转字符串里的单词
+class Solution(object):
+    def reverseWords(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        # # s_list = s.strip().split(" ")
+        # ind = [x for x in range(len(s))]
+        # ind_res = ind[::-1]
+        # s_need = [s[x] for x in ind_res]
+        # return " ".join(s_need)
+
+        s = s.strip()
+        res = ""
+        i, j = len(s) - 1, len(s)
+        while i > 0:
+            if s[i] == ' ':
+                res += s[i + 1: j] + ' '
+                while s[i] == ' ': i -= 1
+                j = i + 1
+            i -= 1
+        return res + s[:j]
+
+2 	仅仅翻转字母
+class Solution(object):
+    def reverseOnlyLetters(self, S):
+        """
+        :type S: str
+        :rtype: str
+        """
+        # 思路双指针
+        S = list(S)
+        front, end = 0, len(S) - 1
+        while front < end:
+            if not S[front].isalpha():
+                front += 1
+            elif not S[end].isalpha():
+                end -= 1
+            else:
+                S[front], S[end] = S[end], S[front]
+                front += 1
+                end -= 1
+        return "".join(S)
